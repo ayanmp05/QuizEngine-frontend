@@ -207,27 +207,19 @@ Update API endpoints if required to point to your local backend server.
 
 ### Dashboard
 
-```markdown
-![Dashboard](https://raw.githubusercontent.com/ayanmp05/QuizEngine-frontend/main/screenshots/dashboard.png)
-```
+![Dashboard](./screenshots/dashboard.png)
 
 ### Mock Exam Interface
 
-```markdown
 ![Exam Interface](./screenshots/exam-portal.png)
-```
 
 ### Performance Analytics
 
-```markdown
 ![Analytics](./screenshots/exam-analysis.png)
-```
 
 ### Dark Mode
 
-```markdown
 ![Dark Mode](./screenshots/dark-mode-dashboard.png)
-```
 
 
 ---
