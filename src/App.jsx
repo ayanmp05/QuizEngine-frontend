@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 // Import Core Components
 import FileUpload from './components/FileUpload';
@@ -182,6 +184,8 @@ export default function App() {
   return (
     <Router>
       <AppContent />
+      <Analytics />
+      <SpeedInsights />
     </Router>
   );
 }
