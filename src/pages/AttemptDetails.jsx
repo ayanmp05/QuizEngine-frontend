@@ -5,10 +5,8 @@ export default function AttemptDetails() {
   const location = useLocation();
   const navigate = useNavigate();
   
-  // We receive the attempt data passed through the router state
   const selectedAttempt = location.state?.attempt;
 
-  // If someone refreshes the page directly and loses the state, send them back to the dashboard
   useEffect(() => {
     if (!selectedAttempt) {
       navigate('/dashboard');
@@ -58,10 +56,57 @@ export default function AttemptDetails() {
       </div>
 
       {/* TWO-COLUMN LAYOUT: Questions & Palette */}
+      {/* Container uses flex-col on mobile, flex-row on lg screens */}
       <div className="flex flex-col lg:flex-row bg-gray-50/50 dark:bg-gray-900/20 transition-colors duration-300">
         
-        {/* LEFT: Detailed Question List */}
-        <div className="flex-1 border-r border-gray-200 dark:border-gray-700">
+        {/* RIGHT: Performance Palette (Applied order-1 for mobile, lg:order-2 for desktop) */}
+        <div className="order-1 lg:order-2 w-full lg:w-80 bg-white dark:bg-gray-800 p-6 shrink-0 border-b lg:border-b-0 lg:border-l border-gray-200 dark:border-gray-700 transition-colors duration-300">
+          <div className="sticky top-6">
+            <h3 className="font-bold text-gray-800 dark:text-gray-100 mb-6 text-center pb-2 border-b border-gray-100 dark:border-gray-700">Questions Palette</h3>
+
+            <div className="grid grid-cols-5 gap-2 mb-8">
+              {selectedAttempt.details && selectedAttempt.details.map((item, idx) => {
+                let btnClass = "h-10 w-full flex items-center justify-center font-bold text-sm rounded-md transition-all hover:scale-105 shadow-sm border ";
+                if (item.chosen === 'Skipped') {
+                  btnClass += "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-600";
+                } else if (item.isCorrect) {
+                  btnClass += "bg-green-500 dark:bg-green-600 text-white border-green-600 dark:border-green-500";
+                } else {
+                  btnClass += "bg-red-500 dark:bg-red-600 text-white border-red-600 dark:border-red-500";
+                }
+
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => scrollToQuestion(idx)}
+                    className={btnClass}
+                    title={`Go to Question ${idx + 1}`}
+                  >
+                    {idx + 1}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="space-y-4 text-xs font-medium text-gray-600 dark:text-gray-400 border-t border-gray-100 dark:border-gray-700 pt-6">
+              <div className="flex items-center gap-3">
+                <div className="w-6 h-6 bg-green-500 dark:bg-green-600 rounded-md border border-green-600 dark:border-green-500 shadow-sm flex shrink-0"></div>
+                <span>Answered Correctly</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-6 h-6 bg-red-500 dark:bg-red-600 rounded-md border border-red-600 dark:border-red-500 shadow-sm flex shrink-0"></div>
+                <span>Answered Incorrectly</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-6 h-6 bg-gray-100 dark:bg-gray-700 rounded-md border border-gray-300 dark:border-gray-600 shadow-sm flex shrink-0"></div>
+                <span>Skipped</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* LEFT: Detailed Question List (Applied order-2 for mobile, lg:order-1 for desktop) */}
+        <div className="order-2 lg:order-1 flex-1 border-r border-gray-200 dark:border-gray-700">
           <div className="divide-y divide-gray-200 dark:divide-gray-700 max-h-[700px] overflow-y-auto custom-scrollbar">
             {!selectedAttempt.details || selectedAttempt.details.length === 0 ? (
               <div className="p-8 text-center text-gray-500 dark:text-gray-400 italic">No granular details available for this legacy attempt.</div>
@@ -110,63 +155,16 @@ export default function AttemptDetails() {
                     {!item.isCorrect && (
                       <div className="min-w-[240px] max-w-md pr-14 p-3 rounded-lg border shadow-sm bg-green-100 dark:bg-green-900/20 border-green-300 dark:border-green-800/50 flex flex-col justify-center relative overflow-hidden transition-colors">
                         <div className="absolute right-0 top-0 bottom-0 w-10 bg-green-200 dark:bg-green-800/50 flex items-center justify-center opacity-50">
-                           <svg className="w-5 h-5 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                            <svg className="w-5 h-5 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                         </div>
                         <span className="text-[11px] font-bold uppercase tracking-wider mb-1 text-green-700/80 dark:text-green-400/80">Correct Answer</span>
                         <span className="text-sm font-semibold text-green-900 dark:text-green-300 relative z-10">{item.correct}</span>
                       </div>
                     )}
                   </div>
-
                 </div>
               ))
             )}
-          </div>
-        </div>
-
-        {/* RIGHT: Performance Palette */}
-        <div className="w-full lg:w-80 bg-white dark:bg-gray-800 p-6 shrink-0 border-l border-gray-200 dark:border-gray-700 transition-colors duration-300">
-          <div className="sticky top-6">
-            <h3 className="font-bold text-gray-800 dark:text-gray-100 mb-6 text-center pb-2 border-b border-gray-100 dark:border-gray-700">Questions Palette</h3>
-
-            <div className="grid grid-cols-5 gap-2 mb-8">
-              {selectedAttempt.details && selectedAttempt.details.map((item, idx) => {
-                let btnClass = "h-10 w-full flex items-center justify-center font-bold text-sm rounded-md transition-all hover:scale-105 shadow-sm border ";
-                if (item.chosen === 'Skipped') {
-                  btnClass += "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-600";
-                } else if (item.isCorrect) {
-                  btnClass += "bg-green-500 dark:bg-green-600 text-white border-green-600 dark:border-green-500";
-                } else {
-                  btnClass += "bg-red-500 dark:bg-red-600 text-white border-red-600 dark:border-red-500";
-                }
-
-                return (
-                  <button
-                    key={idx}
-                    onClick={() => scrollToQuestion(idx)}
-                    className={btnClass}
-                    title={`Go to Question ${idx + 1}`}
-                  >
-                    {idx + 1}
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="space-y-4 text-xs font-medium text-gray-600 dark:text-gray-400 border-t border-gray-100 dark:border-gray-700 pt-6">
-              <div className="flex items-center gap-3">
-                <div className="w-6 h-6 bg-green-500 dark:bg-green-600 rounded-md border border-green-600 dark:border-green-500 shadow-sm flex shrink-0"></div>
-                <span>Answered Correctly</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-6 h-6 bg-red-500 dark:bg-red-600 rounded-md border border-red-600 dark:border-red-500 shadow-sm flex shrink-0"></div>
-                <span>Answered Incorrectly</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-6 h-6 bg-gray-100 dark:bg-gray-700 rounded-md border border-gray-300 dark:border-gray-600 shadow-sm flex shrink-0"></div>
-                <span>Skipped</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
