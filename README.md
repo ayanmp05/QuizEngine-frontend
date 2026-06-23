@@ -208,7 +208,7 @@ Update API endpoints if required to point to your local backend server.
 ### Dashboard
 
 ```markdown
-![Dashboard](./screenshots/dashboard.png)
+![Dashboard](https://raw.githubusercontent.com/ayanmp05/QuizEngine-frontend/main/screenshots/dashboard.png)
 ```
 
 ### Mock Exam Interface
