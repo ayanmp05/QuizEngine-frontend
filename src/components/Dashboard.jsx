@@ -104,9 +104,9 @@ export default function Dashboard({ onRetakeQuiz }) {
         {quizzes.length === 0 ? (
           <p className="text-gray-500 dark:text-gray-400 italic">Upload a PDF to build your library.</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex flex-wrap gap-6">
             {quizzes.map(quiz => (
-              <div key={quiz._id} className="p-5 border rounded-xl flex flex-col justify-between border-gray-300 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition-all group max-w-sm bg-white dark:bg-gray-800/50">
+              <div key={quiz._id} className="w-full sm:w-[340px] p-5 border rounded-xl flex flex-col justify-between border-gray-300 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition-all group bg-white dark:bg-gray-800/50">
                 <div>
                   <h3 className="font-semibold text-gray-800 dark:text-gray-100 truncate" title={quiz.title}>{quiz.title}</h3>
                   <p className="text-xs text-gray-400 dark:text-gray-500 mt-1 flex items-center gap-1">
