@@ -151,6 +151,7 @@ export default function FileUpload({ onQuestionsReceived }) {
           </h3>
           <ul className="space-y-3 text-sm text-amber-700 dark:text-amber-200/80">
             <li className="flex items-start gap-2"><span>•</span> <span><strong>Formatting Matters:</strong> Use PDFs with actual selectable text, not scanned images.</span></li>
+            <li className="flex items-start gap-2"><span>•</span> <span><strong>Limitation:</strong> Try to use pdf containing only 10-50 questions.</span></li>
             <li className="flex items-start gap-2"><span>•</span> <span><strong>Server Load:</strong> AI parsing is intense. If it fails, please wait 30 seconds and try again.</span></li>
             <li className="flex items-start gap-2"><span>•</span> <span><strong>Data Safety:</strong> <strong className="text-red-600 dark:text-red-400">Do not refresh or close this tab</strong> while the spinner is active or you will lose your progress.</span></li>
           </ul>
